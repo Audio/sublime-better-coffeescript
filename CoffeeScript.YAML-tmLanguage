@@ -57,11 +57,15 @@ patterns:
   patterns:
   - name: storage.type.annotation.coffeescript
     match: '@\w*'
+  - include: '#todo_comment_type'
 
 - name: comment.line.number-sign.coffee
-  match: (#)(?!\{).*$\n?
+  begin: (?<!#)#(?!{|##\s+)
+  end: $
   captures:
-    '1': {name: punctuation.definition.comment.coffee}
+    '0': {name: punctuation.definition.comment.coffee}
+  patterns:
+  - include: '#todo_comment_type'
 
 - name: string.regexp.coffee
   begin: /{3}
@@ -237,6 +241,10 @@ repository:
       patterns:
       - name: constant.character.escape.coffee
         match: \\(x\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)
+  todo_comment_type:
+    patterns:
+    - name: message.error
+      match: (TODO|FIXME)(\([^)]+\))?
   variable_name:
     patterns:
     - name: variable.assignment.coffee
